@@ -29,4 +29,12 @@ public class FacultyService {
     public void deleteFaculty(long id) {
         facultyRepository.deleteById(id);
     }
+
+    public Optional<Faculty> findByStudentsId (long id) {
+        return facultyRepository.findByStudentsId(id);
+    }
+
+    public Optional<Faculty> findByNameIgnoreCaseOrColorIgnoreCase(String name, String color){
+        return facultyRepository.findByNameIgnoreCaseOrColorIgnoreCase(name, color);
+    }
 }

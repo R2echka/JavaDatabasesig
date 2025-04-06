@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.service.FacultyService;
 
@@ -26,7 +28,10 @@ public class FacultyController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Optional<Faculty>> getFacultyInfo(@PathVariable Long id) {
+    public ResponseEntity<Optional<Faculty>> getFaculty(@PathVariable Long id, @RequestParam(required=false) String name, @RequestParam(required=false) String color) {
+        if (name != null && !name.isBlank() && color != null && !color.isBlank()){
+            return ResponseEntity.ok(facultyService.findByNameIgnoreCaseOrColorIgnoreCase(name, color));
+        }
         Optional<Faculty> faculty = facultyService.findFaculty(id);
         if (faculty == null) {
             return ResponseEntity.notFound().build();
@@ -53,4 +58,14 @@ public class FacultyController {
         facultyService.deleteFaculty(id);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/students/{id}")
+    public ResponseEntity<Optional<Faculty>> getStudentsFaculty(@PathVariable Long id) {
+        Optional<Faculty> faculty = facultyService.findByStudentsId(id);
+        if (faculty == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        return ResponseEntity.ok(faculty);
+    }
+    
 }
