@@ -59,9 +59,9 @@ public class StudentController {
     }
 
     @GetMapping("/faculty/{id}")
-    public ResponseEntity<Optional<Collection<Student>>> getStudentsFaculty(@PathVariable Long id) {
-        Optional<Collection<Student>> students = studentService.findByFacultyId(id);
-        if (students == null) {
+    public ResponseEntity<Collection<Student>> getStudentsFaculty(@PathVariable Long id) {
+        Collection<Student> students = studentService.findByFacultyId(id);
+        if (students.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         return ResponseEntity.ok(students);

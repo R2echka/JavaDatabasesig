@@ -35,7 +35,7 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
-    public Optional<Collection<Student>> findByFacultyId (long id) {
+    public Collection<Student> findByFacultyId (long id) {
         return studentRepository.findByFacultyId(id);
     }
 
