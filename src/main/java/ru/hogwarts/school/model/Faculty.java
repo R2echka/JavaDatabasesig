@@ -3,6 +3,8 @@ package ru.hogwarts.school.model;
 import java.util.Collection;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -17,6 +19,7 @@ public class Faculty {
 
     private String name, color;
 
+    @JsonManagedReference
     @OneToMany(mappedBy= "faculty")
     private Collection<Student> students;
 

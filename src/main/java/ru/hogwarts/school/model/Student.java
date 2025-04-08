@@ -2,6 +2,8 @@ package ru.hogwarts.school.model;
 
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -18,6 +20,7 @@ public class Student {
     private String name;
     private int age;
 
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "faculty_id")
     private Faculty faculty;
