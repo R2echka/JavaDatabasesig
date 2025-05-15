@@ -14,13 +14,13 @@ public class Avatar {
     private long id;
 
     private String filePath, mediaType;
-    long fileSize;
+    private long fileSize;
 
     @Lob
-    byte[] data;
+    private byte[] data;
 
     @OneToOne
-    Student student;
+    private Student student;
 
     public long getId() {
         return id;
