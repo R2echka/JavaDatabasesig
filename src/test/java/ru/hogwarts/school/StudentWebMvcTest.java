@@ -1,8 +1,8 @@
 package ru.hogwarts.school;
 
 import java.util.ArrayList;
-import java.util.Optional;
 import java.util.Collection;
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import static org.mockito.ArgumentMatchers.any;
