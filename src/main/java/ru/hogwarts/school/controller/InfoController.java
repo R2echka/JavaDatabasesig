@@ -19,10 +19,25 @@ public class InfoController {
     
     @GetMapping("/sum")
     public long getSum() {
-        return Stream
+        long time = System.currentTimeMillis();
+        long sum = Stream
         .iterate(1, a -> a + 1)
         .limit(1_000_000)
         .parallel()
         .reduce(0, (a, b) -> a + b);
+        System.out.println(System.currentTimeMillis() - time);
+        return sum;
+    }
+
+    @GetMapping("/sum2")
+    //uneditet code from the task
+    public long getSum2() {
+        long time = System.currentTimeMillis();
+        long sum = Stream
+        .iterate(1, a -> a +1)
+        .limit(1_000_000)
+        .reduce(0, (a, b) -> a + b );
+        System.out.println(System.currentTimeMillis() - time);
+        return sum;
     }
 }
