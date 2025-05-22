@@ -41,7 +41,7 @@ public class StudentService {
         studentRepository.deleteById(id);
     }
 
-    public Collection<Student> getAllStudents(){
+    public List<Student> getAllStudents(){
         logger.info("Was invoked method for getting all students");
         return studentRepository.findAll();
     }
@@ -83,5 +83,17 @@ public class StudentService {
         .filter(name -> name.startsWith("А"))
         .sorted()
         .collect(Collectors.toList());
+    }
+
+    public void printName(int id){
+        List<Student> students = studentRepository.findAll();
+        if (students.size() < 6) {
+            Thread.currentThread().interrupt();
+        }
+        if (!Thread.interrupted()){
+            synchronized(students){
+                System.out.println(students.get(id).getName());
+            }
+        }
     }
 }
