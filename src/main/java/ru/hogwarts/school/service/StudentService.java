@@ -3,6 +3,7 @@ package ru.hogwarts.school.service;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,11 +63,25 @@ public class StudentService {
 
     public Double getAvgAge(){
         logger.info("Was invoked method for getting avg students age");
-        return studentRepository.getAvgAge();
+        // return studentRepository.getAvgAge();
+        return studentRepository.findAll()
+        .stream()
+        .collect(Collectors.averagingDouble(Student::getAge));
     }
 
     public List<Student> getLastStudents(){
         logger.info("Was invoked method for getting last 5 students");
         return studentRepository.getLastStudents();
+    }
+
+    public List<String> getNamesByFirstLetter(){
+        return studentRepository.findAll()
+        .stream()
+        .parallel()
+        .map(Student::getName)
+        .map(String::toUpperCase)
+        .filter(name -> name.startsWith("А"))
+        .sorted()
+        .collect(Collectors.toList());
     }
 }
