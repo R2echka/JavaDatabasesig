@@ -85,15 +85,13 @@ public class StudentService {
         .collect(Collectors.toList());
     }
 
-    public void printName(int id){
+    public synchronized void printName(int id){
         List<Student> students = studentRepository.findAll();
         if (students.size() < 6) {
             Thread.currentThread().interrupt();
         }
         if (!Thread.interrupted()){
-            synchronized(students){
-                System.out.println(students.get(id).getName());
-            }
+            System.out.println(students.get(id).getName());
         }
     }
 }
