@@ -95,4 +95,38 @@ public class StudentController {
     public List<String> getNamesByFirstLetter() {
         return studentService.getNamesByFirstLetter();
     }
+
+    @GetMapping("/print-parallel")
+    public void printParallel() {
+        List<Student> students = studentService.getAllStudents();
+        if (students.size() < 6) {
+            Thread.currentThread().interrupt();
+        }
+        if (!Thread.interrupted()) {
+            new Thread(() -> {
+                    System.out.println(students.get(3).getName());
+                    System.out.println(students.get(4).getName());
+            }).start();
+            new Thread(() -> {
+                    System.out.println(students.get(5).getName());
+                    System.out.println(students.get(6).getName());
+            }).start();
+                System.out.println(students.get(1).getName());
+                System.out.println(students.get(2).getName());
+        }
+    }
+
+    @GetMapping("/print-synchronized")
+    public void printSynced() {
+        new Thread(() -> {
+            studentService.printName(3);
+            studentService.printName(4);
+        }).start();
+        new Thread(() -> {
+            studentService.printName(5);
+            studentService.printName(6);
+        }).start();
+        studentService.printName(1);
+        studentService.printName(2);
+    }
 }
